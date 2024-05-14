@@ -6,24 +6,58 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
-// Global variable that will contain all of the
-// calculation objects:
-let calcHistory = [{
-  num1 : 1,
-  opertor: '+',
-  num2: 2
-}]
+
+let calcHistory = []
 
 
-// Here's a wonderful place to make some routes:
 
-// GET /calculations
-
-// Will respond with the calcHistory array of objects.
 app.get('/getHistory', (req, res) => {
   res.send(calcHistory)
 })
 
+
+app.post('/postHistory', (req, res) => {
+  let newHistory = req.body
+
+  newHistory.num1 = Number(newHistory.num1)
+  newHistory.num2 = Number(newHistory.num2)
+  console.log("touchdown /postHistory, incoming history:", newHistory)
+
+
+  let result = calcResult(newHistory)
+
+  
+
+  newHistory.result = result
+
+
+  calcHistory.push(newHistory)
+
+  res.sendStatus(200)
+})
+
+let calcResult = (toCalculate) => {
+
+
+
+  let num1 = toCalculate.num1
+  let num2 = toCalculate.num2
+
+
+  switch (toCalculate.operator) {
+    case "+":
+      return num1 + num2
+    case "-":
+      return num1 - num2
+    case "*":
+      return num1 * num2
+    case "/":
+      return num1 / num2
+    default:
+      return NaN
+  }
+
+}
 
 // Here's a wonderful place to make some routes:
 
