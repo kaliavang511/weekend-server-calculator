@@ -3,11 +3,26 @@ const app = express();
 let PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
 // Global variable that will contain all of the
 // calculation objects:
-let calculations = []
+let calcHistory = [{
+  num1 : 1,
+  opertor: '+',
+  num2: 2
+}]
+
+
+// Here's a wonderful place to make some routes:
+
+// GET /calculations
+
+// Will respond with the calcHistory array of objects.
+app.get('/getHistory', (req, res) => {
+  res.send(calcHistory)
+})
 
 
 // Here's a wonderful place to make some routes:
