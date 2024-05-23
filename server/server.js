@@ -7,63 +7,18 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
 
-let calcHistory = []
+const cal = [];
 
-
-
-app.get('/getHistory', (req, res) => {
-  res.send(calcHistory)
+app.get('/cal', (req, res) => {
+  res.send(cal)
 })
 
 
-app.post('/postHistory', (req, res) => {
-  let newHistory = req.body
+app.post('/cal', (req, res) => {
+  cal.push(req.body);
+  res.sendStatus(201);
+});
 
-  newHistory.num1 = Number(newHistory.num1)
-  newHistory.num2 = Number(newHistory.num2)
-  console.log("touchdown /postHistory, incoming history:", newHistory)
-
-
-  let result = calcResult(newHistory)
-
-  
-
-  newHistory.result = result
-
-
-  calcHistory.push(newHistory)
-
-  res.sendStatus(200)
-})
-
-let calcResult = (toCalculate) => {
-
-
-
-  let num1 = toCalculate.num1
-  let num2 = toCalculate.num2
-
-
-  switch (toCalculate.operator) {
-    case "+":
-      return num1 + num2
-    case "-":
-      return num1 - num2
-    case "*":
-      return num1 * num2
-    case "/":
-      return num1 / num2
-    default:
-      return NaN
-  }
-
-}
-
-// Here's a wonderful place to make some routes:
-
-// GET /calculations
-
-// POST /calculations
 
 
 // PLEASE DO NOT MODIFY ANY CODE BELOW THESE BEARS:

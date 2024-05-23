@@ -1,97 +1,67 @@
-let currentOperator
-
-
-let setOperator = (event, op) => {
+function addCal(event){
     event.preventDefault()
+  
+    let num1 = document.getElementById('num1')
+    let num2 =  document.getElementById('num2')
 
-    currentOperator = op
-
-}
-
-
-let getHistory = () => {
-    
-
-    axios({
-        method: "GET",
-        url: "/getHistory"
-    })
-        .then((response) => {
-            console.log("response.data from /getHistory: ", response.data)
-            let history = response.data
-            renderHistory(history)
-
-        })
-        .catch((error) => {
-            console.error("There was an error on GET /getHistory", error)
-
-        })
-}
-
-getHistory()
-
-
-let postHistory = (event) => {
-    event.preventDefault()
-    console.log("New History created...")
-
-
-    let numOne = document.getElementById("numOne").value
-    let numTwo = document.getElementById("numTwo").value
-
-    let newHistory = {
-        num1: numOne,
-        num2: numTwo,
-        operator: currentOperator,
+    let newCal ={
+        num1: num1.value,
+        num2: num2.value
     }
-    console.log("New history to send...", newHistory)
 
+console.log('new cal', newCal)
+axios({
+    method: 'POST',
+    url: '/cal',
+    data: newCal
+  }).then(function(response) {
+
+
+
+    num1.value = '';
+    num2.value = ''
+getCal()
+  })
+}
+
+
+
+
+function getCal(){
     axios({
-        method: "POST",
-        url: "/postHistory",
-        data: newHistory
+        method: 'GET', 
+        url: '/cal'
     })
-        .then((response) => {
+        .then((response) => { 
+            let calList = response.data
+ 
 
+            renderCal(calList)
+        })
+        .catch((error) => { 
+            alert("Sorry, that didnt work.")
+        })
+
+}
+
+getCal()
+
+
+function renderCal(calList){
+    let outputList = document.getElementById('resultHistory')
+    outputList.innerHTML = ""
+    for (let list of calList) {
+        outputList.innerHTML += `
+        <div>
+        <p>
+        ${list.num1}    ${list.num2}
+        </p>
+      
+     
         
-            getHistory()
-            clearForm(event)
-        })
-        .catch((error) => {
-            console.error("There was an error on POST /postHistory", error)
-            alert("POST /postHistory didn't work Barbie girl...")
-        })
-}
-
-
-let renderHistory = (calcHistory) => {
-
-    
-    let resultHistory = document.getElementById("resultHistory")
-    
-
-    resultHistory.innerHTML = ""
-
-    for (let history of calcHistory) {
-        resultHistory.innerHTML += `
-            <div>${history.num1} ${history.operator} ${history.num2} = ${history.result}</div>
+        </div>
         `
-    }
 
-    let recentResult = document.getElementById("recentResult")
-    let lastHistory = calcHistory[calcHistory.length - 1]
-    
-
-    if (lastHistory) {
-        recentResult.innerHTML = `
-        <div>${lastHistory.result}</div>
-    `
-    }
 
 }
-
-let clearForm = (event) => {
-    event.preventDefault()
-    document.getElementById("calcForm").reset()
-    currentOperator = undefined
 }
