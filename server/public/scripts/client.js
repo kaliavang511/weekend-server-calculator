@@ -1,3 +1,13 @@
+let currentOperator
+
+function operator(event, operator){
+    event.preventDefault()
+
+    currentOperator = operator
+    console.log('operator',currentOperator)
+    
+}
+
 function addCal(event){
     event.preventDefault()
   
@@ -6,9 +16,10 @@ function addCal(event){
 
     let newCal ={
         num1: num1.value,
-        num2: num2.value
+        num2: num2.value,
+        currentOperator: currentOperator
+        
     }
-
 console.log('new cal', newCal)
 axios({
     method: 'POST',
@@ -48,13 +59,16 @@ getCal()
 
 
 function renderCal(calList){
+
     let outputList = document.getElementById('resultHistory')
     outputList.innerHTML = ""
     for (let list of calList) {
+        console.log(list)
         outputList.innerHTML += `
         <div>
+        
         <p>
-        ${list.num1}    ${list.num2}
+        ${list.num1} ${list.currentOperator}  ${list.num2} = ${list.result}
         </p>
       
      

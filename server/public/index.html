@@ -12,10 +12,10 @@
 
     <form data-testid="calculator" id="calcForm" onsubmit="addCal(event)">
       <input data-testid="numOne"  id="num1" placeholder="First Number">
-      <!-- <button >+</button>
-      <button >-</button>
-      <button >*</button>
-      <button >/</button> -->
+      <button onClick="operator(event, '+')">+</button>
+      <button onClick ="operator(event,'-')">-</button>
+      <button onClick ="operator(event,'-')">*</button>
+      <button onClick ="operator(event,'-')" >/</button>
       <input data-testid="numTwo" id="num2" placeholder="Second Number">
       <button type="submit">=</button>
       <!-- <button >C</button> -->

@@ -6,7 +6,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
-
 const cal = [];
 
 app.get('/cal', (req, res) => {
@@ -15,9 +14,48 @@ app.get('/cal', (req, res) => {
 
 
 app.post('/cal', (req, res) => {
-  cal.push(req.body);
+let history = (req.body)
+console.log('history is',history)
+
+
+ history.num1 = parseInt(history.num1)
+ history.num2 = parseInt(history.num2)
+
+let result = calculate(history)
+
+history.result = result
+
+cal.push(history);
+
+console.log('history is',history)
+
+
+
   res.sendStatus(201);
 });
+
+function calculate(calc){
+  console.log('incoming data is', calc)
+  
+  let num1 = calc.num1
+  let num2 = calc.num2
+  let operator = calc.currentOperator
+
+  if (operator === "+"){
+   return num1 + num2
+  } else if (operator === "-"){
+    return num1 - num2
+  } else if( operator === '*'){
+   return num1 * num2
+  } else if (operator === '/'){
+   return num1 / num2 
+  }else {
+    return 'Inavlid operator'
+  }
+ 
+
+}
+
 
 
 
