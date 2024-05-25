@@ -1,3 +1,5 @@
+
+
 let currentOperator
 
 function operator(event, operator){
@@ -86,4 +88,13 @@ console.log('last result is', lastResult)
 }
 }
 
+function clearForm(event) {
+    event.preventDefault();
+    let input1 = document.getElementById('numOne')
+    let input2 = document.getElementById('numTwo')
 
+    input1.value = ''
+    input2.value =''
+
+    currentOperator = undefined;
+}
