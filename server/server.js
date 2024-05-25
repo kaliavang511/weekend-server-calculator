@@ -6,15 +6,21 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
-const calculations = [];
+let calculation = [
+  { numOne: 10101, numTwo: 5, operator: '+', result: 10106 },
+  { numOne: 10101, numTwo: 5, operator: '-', result: 10096 }
+];
+console.log('calculation is',calculation)
 
 app.get('/calculations', (req, res) => {
-  res.send(calculations)
+  res.send(calculation)
+  console.log('calulation is',calculation)
+
 })
 
 
 app.post('/calculations', (req, res) => {
-let history = (req.body)
+let history = req.body
 console.log('history is',history)
 
 
@@ -25,7 +31,7 @@ let result = calculate(history)
 
 history.result = result
 
-calculations.push(history);
+calculation.push(history);
 
 console.log('history is',history)
 

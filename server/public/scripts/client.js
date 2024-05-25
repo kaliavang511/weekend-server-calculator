@@ -1,5 +1,3 @@
-
-
 let currentOperator
 
 function operator(event, operator){
@@ -64,12 +62,9 @@ function renderCal(calList){
     for (let list of calList) {
         console.log(list)
         outputList.innerHTML += `
-        <ul>
         <li>
-       
         ${list.numOne} ${list.operator}  ${list.numTwo} = ${list.result}
         </li>
-        </ul>
            `
 
 }
