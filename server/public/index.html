@@ -11,12 +11,12 @@
     <h1>Server-Side Calculator</h1>
 
     <form data-testid="calculator" id="calcForm" onsubmit="addCal(event)">
-      <input data-testid="numOne"  id="num1" placeholder="First Number">
+      <input data-testid="numOne"  id="numOne" placeholder="First Number">
       <button onClick="operator(event, '+')">+</button>
       <button onClick ="operator(event,'-')">-</button>
-      <button onClick ="operator(event,'-')">*</button>
-      <button onClick ="operator(event,'-')" >/</button>
-      <input data-testid="numTwo" id="num2" placeholder="Second Number">
+      <button onClick ="operator(event,'*')">*</button>
+      <button onClick ="operator(event,'/')" >/</button>
+      <input data-testid="numTwo" id="numTwo" placeholder="Second Number">
       <button type="submit">=</button>
       <!-- <button >C</button> -->
     </form>
@@ -26,6 +26,7 @@
     </section>
 
     <section data-testid="resultHistory" id="resultHistory">
+      
       <!-- The list of calculation results goes here. -->
     </section>
   </body>

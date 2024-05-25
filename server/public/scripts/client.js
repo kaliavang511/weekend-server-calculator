@@ -11,26 +11,23 @@ function operator(event, operator){
 function addCal(event){
     event.preventDefault()
   
-    let num1 = document.getElementById('num1')
-    let num2 =  document.getElementById('num2')
+    let numOne = document.getElementById('numOne')
+    let numTwo =  document.getElementById('numTwo')
 
     let newCal ={
-        num1: num1.value,
-        num2: num2.value,
-        currentOperator: currentOperator
-        
+        numOne:(numOne.value),
+        numTwo:(numTwo.value),
+        operator: currentOperator
+
     }
-console.log('new cal', newCal)
+console.log('new calculation', newCal)
 axios({
     method: 'POST',
-    url: '/cal',
+    url: '/calculations',
     data: newCal
   }).then(function(response) {
-
-
-
-    num1.value = '';
-    num2.value = ''
+    numOne.value = '';
+    numTwo.value = ''
 getCal()
   })
 }
@@ -41,7 +38,7 @@ getCal()
 function getCal(){
     axios({
         method: 'GET', 
-        url: '/cal'
+        url: '/calculations'
     })
         .then((response) => { 
             let calList = response.data
@@ -61,21 +58,32 @@ getCal()
 function renderCal(calList){
 
     let outputList = document.getElementById('resultHistory')
-    outputList.innerHTML = ""
+    outputList.innerHTML = " "
     for (let list of calList) {
         console.log(list)
         outputList.innerHTML += `
-        <div>
-        
-        <p>
-        ${list.num1} ${list.currentOperator}  ${list.num2} = ${list.result}
-        </p>
-      
-     
-        
-        </div>
-        `
-
+        <ul>
+        <li>
+       
+        ${list.numOne} ${list.operator}  ${list.numTwo} = ${list.result}
+        </li>
+        </ul>
+           `
 
 }
+
+let recentResult = document.getElementById('recentResult')
+if (calList.length > 0){
+let lastResult = calList[calList.length-1]
+console.log('last result is', lastResult)
+
+    recentResult.innerHTML = `
+    <div>
+    ${lastResult.result}
+
+    </div>
+    `
 }
+}
+
+

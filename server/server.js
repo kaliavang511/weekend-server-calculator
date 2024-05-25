@@ -6,26 +6,26 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
-const cal = [];
+const calculations = [];
 
-app.get('/cal', (req, res) => {
-  res.send(cal)
+app.get('/calculations', (req, res) => {
+  res.send(calculations)
 })
 
 
-app.post('/cal', (req, res) => {
+app.post('/calculations', (req, res) => {
 let history = (req.body)
 console.log('history is',history)
 
 
- history.num1 = parseInt(history.num1)
- history.num2 = parseInt(history.num2)
+ history.numOne = parseInt(history.numOne)
+ history.numTwo = parseInt(history.numTwo)
 
 let result = calculate(history)
 
 history.result = result
 
-cal.push(history);
+calculations.push(history);
 
 console.log('history is',history)
 
@@ -37,18 +37,18 @@ console.log('history is',history)
 function calculate(calc){
   console.log('incoming data is', calc)
   
-  let num1 = calc.num1
-  let num2 = calc.num2
-  let operator = calc.currentOperator
+  let numOne = calc.numOne
+  let numTwo = calc.numTwo
+  let operator = calc.operator
 
   if (operator === "+"){
-   return num1 + num2
+   return numOne + numTwo
   } else if (operator === "-"){
-    return num1 - num2
+    return numOne - numTwo
   } else if( operator === '*'){
-   return num1 * num2
+   return numOne * numTwo
   } else if (operator === '/'){
-   return num1 / num2 
+   return numOne / numTwo 
   }else {
     return 'Inavlid operator'
   }
